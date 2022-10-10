@@ -58,7 +58,10 @@ class AVLTree:
         return root
 
     def clear(self, root):
-        pass
+       if root is not None:
+           self.clear(root.left)
+           self.clear(root.right)
+           del root
 
     def erase(self):
         pass
