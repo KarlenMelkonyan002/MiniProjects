@@ -58,12 +58,13 @@ class AVLTree:
         return root
 
     def clear(self, root):
-       if root is not None:
-           self.clear(root.left)
-           self.clear(root.right)
-           del root
+        if root is not None:
+            self.clear(root.left)
+            self.clear(root.right)
+            del root
 
     def erase(self):
+
         pass
 
     def get_number_of_nodes(self, root):
@@ -91,10 +92,20 @@ class AVLTree:
         self.postorder(root.left)
         self.postorder(root.right)
         print(root.value)
-        pass
 
-    def levelorder(self):
-        pass
+    def current_level(self, root, level):
+        if root is None:
+            return
+        if level == 1:
+            print(root.value)
+        elif level > 1:
+            self.current_level(root.left, level - 1)
+            self.current_level(root.right, level - 1)
+
+    def levelorder(self, root):
+        height = self.get_height(root)
+        for i in range(height + 1):
+            self.current_level(root, i)
 
     def get_root_data(self, root):
         return root.value
@@ -126,6 +137,8 @@ root_ = Tree.insert(40, root_)
 root_ = Tree.insert(50, root_)
 root_ = Tree.insert(25, root_)
 
-Tree.preorder(root_)
+# Tree.preorder(root_)
 # Tree.inorder(root_)
-print(Tree.get_height(root_))
+# print(Tree.get_height(root_))
+# print(Tree.clear(root_))
+Tree.levelorder(root_)
