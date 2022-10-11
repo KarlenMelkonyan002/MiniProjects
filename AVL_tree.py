@@ -5,19 +5,43 @@ class Node:
         self.right = None
         self.height = 1
 
+    def __eq__(self, other):
+        if self is None and other is None:
+            return True
+        if self is not None and other is not None:
+            return (self.value == other.value) and (self.left == other.left) and (self.right == other.right)
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def __add__(self, other):
+        """Working wrong"""
+        if not self:
+            return other
+        if not other:
+            return self
+        root = AVLTree()
+        other.left = other.left.__add__(self.left)
+        other.right = other.right.__add__(self.right)
+        return other
+
 
 class AVLTree:
+
     def get_height(self, root):
+        """Height of AVL tree"""
         if not root:
             return 0
         return max(self.get_height(root.left), self.get_height(root.right)) + 1
 
     def get_balance(self, root):
+        """Balancing AVL tree"""
         if not root:
             return 0
         return self.get_height(root.left) - self.get_height(root.right)
 
     def right_rotate(self, node):
+        """RR of AVL Tree"""
         a = node.left
         b = a.right
         a.right = node
@@ -27,6 +51,7 @@ class AVLTree:
         return a
 
     def left_rotate(self, node):
+        """LR of AVL tree"""
         a = node.right
         b = a.left
         a.left = node
@@ -36,6 +61,7 @@ class AVLTree:
         return a
 
     def insert(self, val, root):
+        """Insert in AVL tree"""
         if not root:
             return Node(val)
         elif val <= root.value:
@@ -58,16 +84,17 @@ class AVLTree:
         return root
 
     def clear(self, root):
+        """Clear all tree"""
         if root is not None:
             self.clear(root.left)
             self.clear(root.right)
             del root
 
     def erase(self):
-
         pass
 
     def get_number_of_nodes(self, root):
+        """Number of nodes in AVL Tree"""
         if not root:
             return 0
         return 1 + self.get_number_of_nodes(root.left) + self.get_number_of_nodes(root.right)
@@ -108,6 +135,7 @@ class AVLTree:
             self.current_level(root, i)
 
     def get_root_data(self, root):
+        """Getting root data"""
         return root.value
 
     def merge(self):
@@ -128,6 +156,19 @@ class AVLTree:
         pass
 
 
+Tree = AVLTree()
+root_ = None
+root_ = Tree.insert(10, root_)
+root_ = Tree.insert(20, root_)
+root_ = Tree.insert(30, root_)
+root_ = Tree.insert(40, root_)
+root_ = Tree.insert(50, root_)
+root_ = Tree.insert(25, root_)
+
+# Tree.preorder(root_)
+# Tree.inorder(root_)
+# print(Tree.get_height(root_))
+# print(Tree.clear(root_))
 Tree = AVLTree()
 root_ = None
 root_ = Tree.insert(10, root_)
